@@ -1,0 +1,124 @@
+SHAMIE WEBSITE COLORS GUIDE
+============================
+
+This guide explains the colors used on the website so you can change them
+without needing to know code. All colors are in the file:
+
+    resources/css/app.css
+
+Look for the section that starts with ":root {" (light mode colors)
+and ".dark {" (dark mode colors).
+
+
+HOW TO CHANGE A COLOR
+---------------------
+Each color looks like this:  --name: oklch(0.5 0.02 50);
+The numbers mean: oklch(lightness, colorfulness, hue)
+- lightness: 0 = black, 1 = white
+- colorfulness: 0 = gray, higher = more colorful
+- hue: 0 = red, 50 = warm beige, 100 = green, 200 = blue, 300 = purple
+
+You can also put a slash at the end:  oklch(0.5 0.02 50 / 0.4)
+The number after the slash is opacity — 1 = solid, 0 = invisible
+
+
+COLOR NAMES AND WHERE THEY ARE USED
+------------------------------------
+
+BACKGROUND
+  --background
+  The main page background. Everything sits on this color.
+  Light mode: near-white. Dark mode: dark warm brown.
+
+FOREGROUND
+  --foreground
+  Main text color. Used for headings and body text.
+  Light mode: dark warm brown-black. Dark mode: near-white.
+
+CARD
+  --card
+  Background color of cards (product cards, info boxes, panels).
+  Light mode: white. Dark mode: dark brown.
+
+CARD-FOREGROUND
+  --card-foreground
+  Text color inside cards. Usually same as --foreground.
+
+PRIMARY
+  --primary
+  Used for buttons, links, active tabs, and important accents.
+  Light mode: very dark brown. Dark mode: warm light beige.
+
+PRIMARY-FOREGROUND
+  --primary-foreground
+  Text color on top of primary-colored elements (like button text).
+  Light mode: near-white. Dark mode: dark brown.
+
+SECONDARY
+  --secondary
+  Used for secondary buttons and subtle backgrounds.
+  Light mode: very light warm gray. Dark mode: dark warm gray.
+
+SECONDARY-FOREGROUND
+  --secondary-foreground
+  Text on secondary-colored elements.
+
+MUTED
+  --muted
+  Used for subtle section backgrounds (like the features section
+  on the home page) and hover states.
+  Light mode: light warm gray. Dark mode: dark warm gray.
+
+MUTED-FOREGROUND
+  --muted-foreground
+  Secondary text, like descriptions, labels, and hints.
+  Light mode: medium warm gray. Dark mode: light warm gray.
+
+ACCENT
+  --accent
+  Used for hover states on interactive elements.
+  Light mode: light warm gray. Dark mode: dark warm gray.
+
+ACCENT-FOREGROUND
+  --accent-foreground
+  Text on accent-colored elements.
+
+DESTRUCTIVE
+  --destructive
+  Used for sale/discount badges, delete buttons, and error messages.
+  A red color.
+
+DESTRUCTIVE-FOREGROUND
+  --destructive-foreground
+  Text on destructive-colored elements (like the "-25%" text on badges).
+
+BORDER
+  --border
+  Subtle borders on cards, sections, and dividers.
+  We keep this semi-transparent so borders are very soft.
+  Light mode: slightly visible warm line. Dark mode: very faint white.
+
+INPUT
+  --input
+  Borders around text fields, search bars, and form controls.
+
+RING
+  --ring
+  The focus ring that appears when you click into a text field
+  or tab to a button. Usually not very visible unless you tab around.
+
+SIDEBAR
+  --sidebar (and --sidebar-foreground, --sidebar-primary, etc.)
+  Used in the admin and seller dashboards sidebar.
+  You can ignore these if you're only changing the public website.
+
+
+QUICK COLOR SWAP EXAMPLE
+-------------------------
+To make the website warmer, change these values in :root {} :
+
+  --primary: oklch(0.3 0.04 30);
+  --muted: oklch(0.95 0.01 30);
+  --border: oklch(0.9 0.01 30 / 0.4);
+
+And change the matching values in .dark {} for dark mode.

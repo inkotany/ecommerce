@@ -1,10 +1,10 @@
-import { usePage, router, useForm } from '@inertiajs/react';
+import { usePage, useForm } from '@inertiajs/react';
 import AdminLayout from '@/layouts/admin/admin-layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 
@@ -12,8 +12,9 @@ export default function AdminUsersEdit() {
     const { user } = usePage<{ user: any }>().props;
 
     const { data, setData, put, processing } = useForm({
+        name: user.name || '',
+        email: user.email || '',
         role: user.role,
-        is_active: user.is_active ?? true,
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -34,12 +35,30 @@ export default function AdminUsersEdit() {
                 <form onSubmit={handleSubmit}>
                     <Card>
                         <CardHeader>
-                            <CardTitle>{user.name}</CardTitle>
-                            <p className="text-sm text-muted-foreground">{user.email}</p>
+                            <CardTitle>User Information</CardTitle>
                         </CardHeader>
-                        <CardContent className="space-y-6">
+                        <CardContent className="space-y-4">
                             <div>
-                                <Label>Role</Label>
+                                <Label>Name *</Label>
+                                <Input
+                                    value={data.name}
+                                    onChange={(e) => setData('name', e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <Label>Email *</Label>
+                                <Input
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <Label>Role *</Label>
                                 <Select value={data.role} onValueChange={(value) => setData('role', value)}>
                                     <SelectTrigger>
                                         <SelectValue />
@@ -52,10 +71,13 @@ export default function AdminUsersEdit() {
                                 </Select>
                             </div>
 
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 pt-2">
                                 <Button type="submit" disabled={processing}>
                                     {processing ? 'Saving...' : 'Save Changes'}
                                 </Button>
+                                <Link href="/admin/users">
+                                    <Button type="button" variant="outline">Cancel</Button>
+                                </Link>
                             </div>
                         </CardContent>
                     </Card>

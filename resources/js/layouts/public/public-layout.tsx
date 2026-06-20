@@ -40,7 +40,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
     return (
         <div className="min-h-screen bg-background">
             {/* Header */}
-            <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <nav className="container mx-auto px-4">
                     <div className="flex h-16 items-center justify-between">
                         {/* Logo */}
@@ -81,6 +81,21 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                             <div className="hidden md:flex items-center gap-2">
                                 {auth.user ? (
                                     <>
+                                        {(() => {
+                                            const isSellerOrAdmin = auth.user.role === 'seller' || auth.user.role === 'admin';
+                                            const dashboardUrl = auth.user.role === 'admin'
+                                                ? '/admin/dashboard'
+                                                : auth.user.role === 'seller'
+                                                    ? '/seller/dashboard'
+                                                    : '/dashboard';
+                                            return isSellerOrAdmin ? (
+                                                <Link href={dashboardUrl}>
+                                                    <Button variant="outline" size="sm">
+                                                        Dashboard
+                                                    </Button>
+                                                </Link>
+                                            ) : null;
+                                        })()}
                                         <Link href="/settings/profile">
                                             <Button variant="ghost" size="sm">
                                                 <User className="mr-2 h-4 w-4" />
@@ -114,7 +129,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                                             <span className="text-sm font-medium">Theme</span>
                                             <ThemeSwitcher />
                                         </div>
-                                        <div className="border-t pt-2" />
+                                        <div className="pt-2 border-t border-border/50" />
                                         {navigation.map((item) => (
                                             <Link
                                                 key={item.name}
@@ -157,50 +172,50 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
             <main>{children}</main>
 
             {/* Footer */}
-            <footer className="border-t bg-muted/50 mt-16">
-                <div className="container mx-auto px-4 py-12">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div>
-                            <Link href="/" className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <footer className="border-t bg-muted/40 mt-20 lg:mt-28">
+                <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-16">
+                        <div className="col-span-2 md:col-span-1">
+                            <Link href="/" className="text-xl font-bold tracking-tight text-foreground">
                                 {website.name}
                             </Link>
-                            <p className="mt-2 text-sm text-muted-foreground">
+                            <p className="mt-3 text-sm text-muted-foreground leading-relaxed max-w-xs">
                                 {website.tagline}
                             </p>
                         </div>
                         <div>
-                            <h3 className="font-semibold mb-4">Shop</h3>
-                            <div className="space-y-2 text-sm text-muted-foreground">
-                                <Link href="/" className="block hover:text-primary">All Products</Link>
-                                <Link href="/about" className="block hover:text-primary">About Us</Link>
-                                <Link href="/contact" className="block hover:text-primary">Contact</Link>
+                            <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide uppercase">Shop</h3>
+                            <div className="space-y-3 text-sm">
+                                <Link href="/" className="block text-muted-foreground hover:text-foreground transition-colors">All Products</Link>
+                                <Link href="/about" className="block text-muted-foreground hover:text-foreground transition-colors">About Us</Link>
+                                <Link href="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
                             </div>
                         </div>
                         <div>
-                            <h3 className="font-semibold mb-4">Legal</h3>
-                            <div className="space-y-2 text-sm text-muted-foreground">
-                                <Link href="/terms" className="block hover:text-primary">Terms of Service</Link>
-                                <Link href="/privacy" className="block hover:text-primary">Privacy Policy</Link>
+                            <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide uppercase">Legal</h3>
+                            <div className="space-y-3 text-sm">
+                                <Link href="/terms" className="block text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link>
+                                <Link href="/privacy" className="block text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
                             </div>
                         </div>
                         <div>
-                            <h3 className="font-semibold mb-4">Account</h3>
-                            <div className="space-y-2 text-sm text-muted-foreground">
+                            <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide uppercase">Account</h3>
+                            <div className="space-y-3 text-sm">
                                 {auth.user ? (
                                     <>
-                                        <Link href="/orders" className="block hover:text-primary">My Orders</Link>
-                                        <Link href="/settings/profile" className="block hover:text-primary">Profile</Link>
+                                        <Link href="/orders" className="block text-muted-foreground hover:text-foreground transition-colors">My Orders</Link>
+                                        <Link href="/settings/profile" className="block text-muted-foreground hover:text-foreground transition-colors">Profile</Link>
                                     </>
                                 ) : (
                                     <>
-                                        <Link href="/login" className="block hover:text-primary">Login</Link>
-                                        <Link href="/register" className="block hover:text-primary">Register</Link>
+                                        <Link href="/login" className="block text-muted-foreground hover:text-foreground transition-colors">Login</Link>
+                                        <Link href="/register" className="block text-muted-foreground hover:text-foreground transition-colors">Register</Link>
                                     </>
                                 )}
                             </div>
                         </div>
                     </div>
-                    <div className="border-t mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-border/50">
                         <p className="text-sm text-muted-foreground">
                             &copy; {new Date().getFullYear()} {website.name}. All rights reserved.
                         </p>

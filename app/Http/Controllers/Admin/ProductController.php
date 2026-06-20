@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -39,18 +40,28 @@ class ProductController extends Controller
 
         return inertia('admin/products/edit', [
             'product' => $product,
-            'statuses' => config('ecommerce.order_statuses'),
+            'categories' => Category::orderBy('name')->get(),
+            'conditions' => config('ecommerce.product_conditions', ['new' => 'New', 'used' => 'Used', 'refurbished' => 'Refurbished']),
         ]);
     }
 
     public function update(Request $request, Product $product)
     {
-        $request->validate([
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|numeric|min:0',
+            'compare_price' => 'nullable|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'short_description' => 'nullable|string|max:500',
+            'condition' => 'nullable|string|max:50',
+            'location' => 'nullable|string|max:255',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
         ]);
 
-        $product->update($request->only(['is_active', 'is_featured']));
+        $product->update($validated);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }

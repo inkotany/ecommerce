@@ -9,3 +9,6 @@
 
 # database
 - Use SQLite for all database needs. Confidence: 0.65
+
+# design
+- Prefer flat design with minimal borders and reduced rounded corners. Confidence: 0.65

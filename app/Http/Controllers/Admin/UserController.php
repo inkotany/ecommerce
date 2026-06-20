@@ -43,11 +43,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'role' => ['required', Rule::in(UserRole::values())],
             'is_active' => 'boolean',
         ]);
 
-        $user->update($request->only(['role', 'is_active']));
+        $user->update($request->only(['name', 'email', 'role', 'is_active']));
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully!');
     }
