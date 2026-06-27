@@ -90,7 +90,7 @@ export default function AdminUsersIndex() {
                                     <TableCell className="font-medium">{user.name}</TableCell>
                                     <TableCell>{user.email}</TableCell>
                                     <TableCell>
-                                        <Badge className={roleColors[user.role] || 'bg-gray-500', 'text-white'}>
+                                        <Badge className={`${roleColors[user.role] || 'bg-gray-500'} text-white`}>
                                             {user.role}
                                         </Badge>
                                     </TableCell>
